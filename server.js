@@ -121,9 +121,7 @@ const loginSchema = z.object({
 const videoSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
-  filename: z.string(),
-  mimetype: z.string(),
-  size: z.number()
+  s3Key: z.string()
 });
 
 const commentSchema = z.object({
