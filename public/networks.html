@@ -1,0 +1,91 @@
+<!-- Networks Listing Page -->
+<div id="networks-page" class="page hidden">
+    <div class="page-header">
+        <h1>Networks</h1>
+        <button id="btn-create-network" class="btn primary">+ Crea Rete</button>
+    </div>
+
+    <div id="networks-grid" class="networks-grid"></div>
+</div>
+
+<!-- Network Detail Page -->
+<div id="network-detail-page" class="page hidden">
+    <div class="network-header">
+        <div id="network-info"></div>
+        <div id="network-actions"></div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" data-tab="members">Membri</button>
+        <button class="tab" data-tab="videos">Video</button>
+        <button class="tab" data-tab="applications">Candidature</button>
+    </div>
+
+    <div class="tab-content" id="tab-members">
+        <div id="members-list"></div>
+    </div>
+
+    <div class="tab-content hidden" id="tab-videos">
+        <div id="network-videos"></div>
+    </div>
+
+    <div class="tab-content hidden" id="tab-applications">
+        <div id="applications-list"></div>
+    </div>
+</div>
+
+<!-- Create/Edit Network Modal -->
+<div class="modal hidden" id="network-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="network-modal-title">Crea Rete</h3>
+            <button id="btn-close-network-modal" class="btn ghost">×</button>
+        </div>
+        <form id="network-form">
+            <label>Nome Rete</label>
+            <input type="text" name="name" placeholder="Tech Reviewers Italia" required>
+
+            <label>Descrizione</label>
+            <textarea name="description" placeholder="Una rete di creator tech italiani"></textarea>
+
+            <label>Tematiche (separati da virgola)</label>
+            <input type="text" name="themes" placeholder="Tech, Gaming, Educazione" required>
+
+            <label>Logo URL (opzionale)</label>
+            <input type="url" name="logoUrl" placeholder="https://...">
+
+            <button type="submit" class="btn primary full">Salva</button>
+        </form>
+    </div>
+</div>
+
+<!-- User Profile Page -->
+<div id="profile-page" class="page hidden">
+    <h1>Il Mio Profilo</h1>
+    <form id="profile-form">
+        <label>Nome Visualizzato</label>
+        <input type="text" name="displayName" id="profile-displayName">
+
+        <label>Bio</label>
+        <textarea name="bio" id="profile-bio" placeholder="Racconta qualcosa di te..."></textarea>
+
+        <label>Email di Contatto</label>
+        <input type="email" name="contactEmail" id="profile-contactEmail">
+
+        <label>Telefono</label>
+        <input type="tel" name="phone" id="profile-phone">
+
+        <label>Social Links</label>
+        <input type="text" name="twitter" id="profile-twitter" placeholder="Twitter">
+        <input type="text" name="linkedin" id="profile-linkedin" placeholder="LinkedIn">
+        <input type="text" name="instagram" id="profile-instagram" placeholder="Instagram">
+        <input type="url" name="website" id="profile-website" placeholder="Sito Web">
+
+        <label>
+            <input type="checkbox" name="isPublicProfile" id="profile-isPublic">
+            Rendi pubblici i contatti
+        </label>
+
+        <button type="submit" class="btn primary">Salva Profilo</button>
+    </form>
+</div>

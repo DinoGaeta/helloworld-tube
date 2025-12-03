@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World! Tube</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="networks.css">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23090b10'/%3E%3Cpath d='M6 6h20v20H6z' fill='%23ff7043'/%3E%3Cpath d='M10 12h12v8H10z' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+</head>
+
+<body>
+    <div id="app">
+        <header class="topbar">
+            <div class="brand">
+                <div class="logo">HW!</div>
+                <div>
+                    <div class="brand-title">Hello World!</div>
+                    <div class="brand-sub">Video che respirano, niente rumore</div>
+                </div>
+            </div>
+            <div class="top-actions">
+                <button id="btn-networks" class="btn ghost">🌐 Networks</button>
+                <input id="search-input" type="text" placeholder="Cerca o incolla un tema" />
+                <button id="btn-search" class="btn ghost">Cerca</button>
+                <button id="btn-upload" class="btn primary">+ Carica</button>
+                <div id="user-area" class="user-area">
+                    <div id="user-info" class="user-info hidden">
+                        <span id="user-name"></span>
+                        <button id="btn-logout" class="btn ghost">Esci</button>
+                    </div>
+                    <div id="auth-forms" class="auth-forms">
+                        <input id="login-email" type="email" placeholder="Email">
+                        <input id="login-pass" type="password" placeholder="Password">
+                        <button id="btn-login" class="btn secondary">Entra</button>
+                        <button id="btn-signup" class="btn ghost">Registrati</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="layout">
+            <!-- Original Feed & Player -->
+            <section class="feed" id="feed"></section>
+            <section class="player-panel hidden" id="player-panel">
+                <div class="player">
+                    <video id="video-player" controls></video>
+                    <div class="player-meta">
+                        <h2 id="video-title"></h2>
+                        <p id="video-desc"></p>
+                        <div class="meta-line">
+                            <span id="video-uploader"></span>
+                            <span id="video-date"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabs">
+                    <button class="tab active" data-tab="notes">Appunti</button>
+                    <button class="tab" data-tab="comments">Q&A</button>
+                </div>
+                <div class="tab-content" id="tab-notes">
+                    <div id="notes-list" class="note-list"></div>
+                    <div class="comment-box">
+                        <textarea id="note-text" placeholder="Aggiungi appunto"></textarea>
+                        <button id="btn-note" class="btn primary">Pubblica</button>
+                    </div>
+                </div>
+                <div class="tab-content hidden" id="tab-comments">
+                    <div id="comments-list" class="comment-list"></div>
+                    <div class="comment-box">
+                        <textarea id="comment-text" placeholder="Fai una domanda"></textarea>
+                        <button id="btn-comment" class="btn primary">Invia</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Networks Pages -->
+            <section class="page hidden" id="networks-page">
+                <div class="page-header">
+                    <h1>Networks</h1>
+                    <button id="btn-create-network" class="btn primary">+ Crea Rete</button>
+                </div>
+                <div id="networks-grid" class="networks-grid"></div>
+            </section>
+
+            <section class="page hidden" id="network-detail-page">
+                <button id="btn-back-networks" class="btn ghost">← Indietro</button>
+                <div class="network-header">
+                    <div id="network-info"></div>
+                    <div id="network-actions"></div>
+                </div>
+                <div class="tabs">
+                    <button class="tab active" data-tab="members">Membri</button>
+                    <button class="tab" data-tab="videos">Video</button>
+                    <button class="tab" data-tab="applications">Candidature</button>
+                </div>
+                <div class="tab-content" id="tab-members">
+                    <div id="members-list"></div>
+                </div>
+                <div class="tab-content hidden" id="tab-videos">
+                    <div id="network-videos"></div>
+                </div>
+                <div class="tab-content hidden" id="tab-applications">
+                    <div id="applications-list"></div>
+                </div>
+            </section>
+
+            <section class="page hidden" id="profile-page">
+                <h1>Il Mio Profilo</h1>
+                <form id="profile-form">
+                    <label>Bio</label>
+                    <textarea name="bio" id="profile-bio" placeholder="Racconta qualcosa di te..."></textarea>
+                    <label>Email di Contatto</label>
+                    <input type="email" name="contactEmail" id="profile-contactEmail">
+                    <label>Telefono</label>
+                    <input type="tel" name="phone" id="profile-phone">
+                    <label>Social Links</label>
+                    <input type="text" name="twitter" id="profile-twitter" placeholder="Twitter">
+                    <input type="text" name="linkedin" id="profile-linkedin" placeholder="LinkedIn">
+                    <input type="text" name="instagram" id="profile-instagram" placeholder="Instagram">
+                    <input type="url" name="website" id="profile-website" placeholder="Sito Web">
+                    <label>
+                        <input type="checkbox" name="isPublicProfile" id="profile-isPublic">
+                        Rendi pubblici i contatti
+                    </label>
+                    <button type="submit" class="btn primary">Salva Profilo</button>
+                </form>
+            </section>
+        </main>
+
+        <!-- Network Modal -->
+        <div class="modal hidden" id="network-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Crea Rete</h3>
+                    <button id="btn-close-network-modal" class="btn ghost">×</button>
+                </div>
+                <form id="network-form">
+                    <label>Nome Rete</label>
+                    <input type="text" name="name" placeholder="Tech Reviewers Italia" required>
+                    <label>Descrizione</label>
+                    <textarea name="description" placeholder="Una rete di creator tech italiani"></textarea>
+                    <label>Tematiche (separati da virgola)</label>
+                    <input type="text" name="themes" placeholder="Tech, Gaming, Educazione" required>
+                    <label>Logo URL (opzionale)</label>
+                    <input type="url" name="logoUrl" placeholder="https://...">
+                    <button type="submit" class="btn primary full">Salva</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal hidden" id="upload-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Carica un video</h3>
+                    <button id="btn-close-modal" class="btn ghost">×</button>
+                </div>
+                <form id="upload-form">
+                    <label>Titolo</label>
+                    <input type="text" name="title" placeholder="Titolo del video" required>
+                    <label>Descrizione</label>
+                    <textarea name="description" placeholder="Di cosa parla?"></textarea>
+                    <label>File video</label>
+                    <input type="file" name="video" accept="video/*" required>
+                    <button type="submit" class="btn primary full">Carica</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="toast" class="toast hidden"></div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="networks.js"></script>
+</body>
+
+</html>

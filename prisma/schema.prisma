@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  displayName  String?
+  createdAt    DateTime  @default(now())
+  
+  // Profile fields for Networks
+  phone            String?
+  contactEmail     String?
+  bio              String?
+  socialLinks      Json?   // {twitter: "", linkedin: "", etc}
+  isPublicProfile  Boolean @default(false)
+  
+  // Relations
+  videos              Video[]
+  comments            Comment[]
+  sessions            Session[]
+  ownedNetworks       Network[]              @relation("NetworkOwner")
+  memberships         NetworkMembership[]
+  sentInvitations     NetworkInvitation[]    @relation("InvitationSender")
+  receivedInvitations NetworkInvitation[]    @relation("InvitationReceiver")
+  applications        NetworkApplication[]
+}
+
+model Session {
+  id        String    @id @default(uuid())
+  token     String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  expiresAt DateTime?
+}
+
+model Video {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  filename    String
+  mimetype    String
+  size        Int
+  uploaderId  String
+  uploader    User      @relation(fields: [uploaderId], references: [id])
+  views       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  comments    Comment[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+  videoId   String
+  video     Video    @relation(fields: [videoId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+// Networks Feature Models
+
+model Network {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  ownerId     String
+  owner       User      @relation("NetworkOwner", fields: [ownerId], references: [id])
+  themes      String[]  // Array of tags: ["Tech", "Gaming", etc]
+  logoUrl     String?
+  createdAt   DateTime  @default(now())
+  
+  memberships  NetworkMembership[]
+  invitations  NetworkInvitation[]
+  applications NetworkApplication[]
+}
+
+model NetworkMembership {
+  id        String   @id @default(uuid())
+  networkId String
+  network   Network  @relation(fields: [networkId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  role      String   @default("member") // "owner" or "member"
+  status    String   @default("active") // "active" or "pending"
+  joinedAt  DateTime @default(now())
+  
+  @@unique([networkId, userId])
+}
+
+model NetworkInvitation {
+  id            String   @id @default(uuid())
+  networkId     String
+  network       Network  @relation(fields: [networkId], references: [id], onDelete: Cascade)
+  invitedUserId String
+  invitedUser   User     @relation("InvitationReceiver", fields: [invitedUserId], references: [id])
+  inviterId     String
+  inviter       User     @relation("InvitationSender", fields: [inviterId], references: [id])
+  status        String   @default("pending") // "pending", "accepted", "rejected"
+  message       String?
+  createdAt     DateTime @default(now())
+  
+  @@unique([networkId, invitedUserId])
+}
+
+model NetworkApplication {
+  id          String   @id @default(uuid())
+  networkId   String
+  network     Network  @relation(fields: [networkId], references: [id], onDelete: Cascade)
+  applicantId String
+  applicant   User     @relation(fields: [applicantId], references: [id])
+  message     String?
+  status      String   @default("pending") // "pending", "approved", "rejected"
+  createdAt   DateTime @default(now())
+  
+  @@unique([networkId, applicantId])
+}
