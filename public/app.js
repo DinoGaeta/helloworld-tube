@@ -133,7 +133,7 @@ window.addEventListener('popstate', (event) => {
 
 // Share button listener
 document.getElementById('btn-share').addEventListener('click', shareVideo);
-}
+
 
 async function openVideo(id, pushState = true) {
     const video = state.videos.find(v => v.id === id);
