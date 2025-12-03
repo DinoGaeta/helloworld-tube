@@ -237,9 +237,7 @@ async function handleUpload(e) {
             body: JSON.stringify({
                 title,
                 description,
-                filename: presignRes.key,
-                mimetype: file.type,
-                size: file.size
+                s3Key: presignRes.key
             })
         });
 
