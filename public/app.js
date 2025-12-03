@@ -108,17 +108,75 @@ function renderFeed() {
     });
 }
 
-async function openVideo(id) {
+// Check for video ID in URL
+const urlParams = new URLSearchParams(window.location.search);
+const videoId = urlParams.get('v');
+if (videoId) {
+    // Wait for videos to load then open
+    const checkVideo = setInterval(() => {
+        if (state.videos.length > 0) {
+            clearInterval(checkVideo);
+            openVideo(videoId, false);
+        }
+    }, 100);
+}
+
+// Handle back button
+window.addEventListener('popstate', (event) => {
+    if (event.state && event.state.videoId) {
+        openVideo(event.state.videoId, false);
+    } else {
+        els.playerPanel.classList.add('hidden');
+        state.currentVideo = null;
+    }
+});
+
+// Share button listener
+document.getElementById('btn-share').addEventListener('click', shareVideo);
+}
+
+async function openVideo(id, pushState = true) {
     const video = state.videos.find(v => v.id === id);
     if (!video) return;
     state.currentVideo = video;
+
+    if (pushState) {
+        const newUrl = `${window.location.pathname}?v=${id}`;
+        window.history.pushState({ videoId: id }, '', newUrl);
+    }
+
     els.playerPanel.classList.remove('hidden');
     els.videoPlayer.src = `/api/videos/${id}/stream`;
     els.videoTitle.textContent = video.title;
     els.videoDesc.textContent = video.description || '—';
     els.videoUploader.textContent = video.uploaderName || 'Creatore';
     els.videoDate.textContent = new Date(video.createdAt).toLocaleString();
+
+    // Scroll to player
+    els.playerPanel.scrollIntoView({ behavior: 'smooth' });
+
     await loadComments(id);
+}
+
+async function shareVideo() {
+    if (!state.currentVideo) return;
+
+    const shareData = {
+        title: state.currentVideo.title,
+        text: `Guarda questo video su Hello World! Tube: ${state.currentVideo.title}`,
+        url: window.location.href
+    };
+
+    try {
+        if (navigator.share) {
+            await navigator.share(shareData);
+        } else {
+            await navigator.clipboard.writeText(window.location.href);
+            showToast('Link copiato negli appunti! 📋');
+        }
+    } catch (err) {
+        console.error('Error sharing:', err);
+    }
 }
 
 async function loadComments(videoId) {
