@@ -59,9 +59,9 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", process.env.S3_ENDPOINT || "http://localhost:9000", "https://localhost:9000"],
-      mediaSrc: ["'self'", process.env.S3_ENDPOINT || "http://localhost:9000", "https://localhost:9000"],
-      imgSrc: ["'self'", "data:", "blob:", process.env.S3_ENDPOINT || "http://localhost:9000", "https://localhost:9000"],
+      connectSrc: ["'self'", "https://vsxaqsgcrpijascpitkf.supabase.co", "http://localhost:9000", "https://localhost:9000"],
+      mediaSrc: ["'self'", "https://vsxaqsgcrpijascpitkf.supabase.co", "http://localhost:9000", "https://localhost:9000"],
+      imgSrc: ["'self'", "data:", "blob:", "https://vsxaqsgcrpijascpitkf.supabase.co", "http://localhost:9000", "https://localhost:9000"],
       scriptSrc: ["'self'", "'unsafe-inline'"], // Allow inline scripts if needed for simple frontend
     },
   },
