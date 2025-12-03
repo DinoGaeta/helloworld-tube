@@ -51,6 +51,9 @@ async function ensureBucket() {
 }
 ensureBucket();
 
+// Trust proxy (required for Render)
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(helmet({
   contentSecurityPolicy: {
