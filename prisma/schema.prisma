@@ -46,12 +46,9 @@ model Video {
   id          String    @id @default(uuid())
   title       String
   description String?
-  filename    String
-  mimetype    String
-  size        Int
+  s3Key       String
   uploaderId  String
-  uploader    User      @relation(fields: [uploaderId], references: [id])
-  views       Int       @default(0)
+  uploader    User      @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now())
   comments    Comment[]
 }
