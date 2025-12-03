@@ -126,3 +126,72 @@
     padding: 10px;
     border-radius: 8px;
 }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .networks-grid {
+        grid-template-columns: 1fr;
+        padding: 12px 0;
+        gap: 12px;
+    }
+
+    .network-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .network-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .network-actions .btn {
+        width: 100%;
+    }
+
+    .page {
+        padding: 16px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .page-header .btn {
+        width: 100%;
+    }
+
+    #profile-form {
+        max-width: 100%;
+    }
+
+    .member-item,
+    .application-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .member-item .btn,
+    .application-item .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        padding: 12px;
+    }
+
+    .network-card {
+        padding: 12px;
+    }
+
+    .network-logo {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}

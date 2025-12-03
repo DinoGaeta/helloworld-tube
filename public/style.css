@@ -326,6 +326,7 @@ body {
     box-shadow: var(--shadow);
 }
 
+/* Tablet and below */
 @media (max-width: 1000px) {
     .layout {
         grid-template-columns: 1fr;
@@ -341,6 +342,122 @@ body {
 
     #search-input {
         flex: 1 1 200px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .topbar {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+    }
+
+    .brand-title {
+        font-size: 18px;
+    }
+
+    .brand-sub {
+        display: none;
+    }
+
+    .logo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .top-actions {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    #search-input {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .auth-forms {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .auth-forms input {
+        width: 100%;
+    }
+
+    .layout {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .feed {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    .card-thumb {
+        height: 180px;
+    }
+
+    .btn {
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+
+    .modal-content {
+        width: 95vw;
+        padding: 14px;
+    }
+
+    .toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        text-align: center;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+    }
+
+    .tab {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .topbar {
+        padding: 10px 12px;
+    }
+
+    .brand-title {
+        font-size: 16px;
+    }
+
+    .logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .layout {
+        padding: 8px;
+    }
+
+    .card-thumb {
+        height: 160px;
+    }
+
+    .btn {
+        padding: 10px 14px;
+    }
+
+    .user-info {
+        font-size: 14px;
     }
 }
 
