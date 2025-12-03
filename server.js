@@ -131,7 +131,10 @@ const commentSchema = z.object({
 // --- Routes ---
 
 // Health Check
-app.get('/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/health', (req, res) => {
+  console.log('Health check ping received');
+  res.json({ status: 'ok' });
+});
 
 // Auth
 app.post('/api/signup', async (req, res) => {
