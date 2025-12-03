@@ -344,7 +344,7 @@ app.get('/api/videos/:id/stream', async (req, res) => {
 
     const command = new GetObjectCommand({
       Bucket: BUCKET_NAME,
-      Key: video.filename
+      Key: video.s3Key
     });
 
     let url = await getSignedUrl(s3, command, { expiresIn: 3600 });
